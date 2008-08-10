@@ -50,7 +50,7 @@ snippet examples.
 %package -n %{libname_devel}
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{lib_name} = %{version}-%{release}
+Requires:       %{libname} = %{version}-%{release}
 Requires:       tommath-devel >= %{tommath_version}
 Provides:       tomcrypt-devel = %{version}-%{release}
 
