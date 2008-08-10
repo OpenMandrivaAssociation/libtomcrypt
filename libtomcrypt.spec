@@ -2,6 +2,8 @@
 %define libname_devel %mklibname tomcrypt -d
 %define libname_static_devel %mklibname tomcrypt -d -s
 
+%define tommath_version 0.41
+
 Name:           libtomcrypt
 Version:        1.17
 Release:        %mkrel 1
@@ -14,7 +16,7 @@ Patch0:         libtomcrypt-makefile.patch
 BuildRequires:  ghostscript
 BuildRequires:  tetex-dvips
 BuildRequires:  tetex-latex
-BuildRequires:  tommath-devel >= 0.41
+BuildRequires:  tommath-devel >= %{tommath_version}
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
@@ -49,7 +51,7 @@ snippet examples.
 Summary:        Development files for %{name}
 Group:          Development/C
 Requires:       %{name} = %{version}-%{release}
-Requires:       tommath-devel = %{version}-%{release}
+Requires:       tommath-devel >= %{tommath_version}
 Provides:       tomcrypt-devel = %{version}-%{release}
 
 %description -n %{libname_devel}
@@ -60,7 +62,7 @@ developing applications that use %{name}.
 Summary:        Static development files for %{name}
 Group:          Development/C
 Requires:       %{name}-devel = %{version}-%{release}
-Requires:       tommath-static-devel = %{version}-%{release}
+Requires:       tommath-static-devel >= %{tommath_version}
 Provides:       tomcrypt-static-devel = %{version}-%{release}
 
 %description -n %{libname_static_devel}
