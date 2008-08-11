@@ -14,6 +14,7 @@ URL:            http://www.libtom.org/?page=features&newsitems=5&whatfile=crypt
 Source0:        http://www.libtom.org/files/crypt-%{version}.tar.bz2
 Patch0:         libtomcrypt-makefile.patch
 BuildRequires:  ghostscript
+BuildRequires:  libtool
 BuildRequires:  tetex-dvips
 BuildRequires:  tetex-latex
 BuildRequires:  tommath-devel >= %{tommath_version}
