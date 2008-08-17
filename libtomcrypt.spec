@@ -6,7 +6,7 @@
 
 Name:           libtomcrypt
 Version:        1.17
-Release:        %mkrel 1
+Release:        %mkrel 2
 Summary:        Comprehensive, portable cryptographic toolkit
 Group:          System/Libraries
 License:        Public Domain
@@ -62,7 +62,7 @@ developing applications that use %{name}.
 %package -n %{libname_static_devel}
 Summary:        Static development files for %{name}
 Group:          Development/C
-Requires:       %{name}-devel = %{version}-%{release}
+Requires:       tomcrypt-devel = %{version}-%{release}
 Requires:       tommath-static-devel >= %{tommath_version}
 Provides:       tomcrypt-static-devel = %{version}-%{release}
 
