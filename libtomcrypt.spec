@@ -6,7 +6,7 @@
 
 Name:           libtomcrypt
 Version:        1.17
-Release:        %mkrel 2
+Release:        %mkrel 3
 Summary:        Comprehensive, portable cryptographic toolkit
 Group:          System/Libraries
 License:        Public Domain
