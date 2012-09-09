@@ -12,7 +12,6 @@ Group:          System/Libraries
 License:        Public Domain
 URL:            http://www.libtom.org/?page=features&newsitems=5&whatfile=crypt
 Source0:        http://www.libtom.org/files/crypt-%{version}.tar.bz2
-Patch0:         libtomcrypt-makefile.patch
 BuildRequires:  ghostscript
 BuildRequires:  libtool
 BuildRequires:  tetex-dvips
@@ -71,7 +70,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .makefile~
 
 %build
 export CFLAGS="%{optflags} -DLTM_DESC -DUSE_LTM -I%{_includedir}/tommath"
