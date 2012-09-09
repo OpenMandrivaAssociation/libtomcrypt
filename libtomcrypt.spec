@@ -6,7 +6,7 @@
 
 Name:           libtomcrypt
 Version:        1.17
-Release:        %mkrel 3
+Release:        4
 Summary:        Comprehensive, portable cryptographic toolkit
 Group:          System/Libraries
 License:        Public Domain
@@ -16,9 +16,8 @@ Patch0:         libtomcrypt-makefile.patch
 BuildRequires:  ghostscript
 BuildRequires:  libtool
 BuildRequires:  tetex-dvips
-BuildRequires:  tetex-latex
+BuildRequires:  tetex-latex ghostscript-dvipdf
 BuildRequires:  tommath-devel >= %{tommath_version}
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 A comprehensive, modular and portable cryptographic toolkit that
@@ -32,7 +31,7 @@ or removed without change to the overall end application. It features
 easy to use functions and a complete user manual which has many source
 snippet examples.
 
-%package -n %{libname}
+%package -n	%{libname}
 Summary:        Comprehensive, portable cryptographic toolkit
 Group:          System/Libraries
 
@@ -48,7 +47,7 @@ or removed without change to the overall end application. It features
 easy to use functions and a complete user manual which has many source
 snippet examples.
 
-%package -n %{libname_devel}
+%package -n	%{libname_devel}
 Summary:        Development files for %{name}
 Group:          Development/C
 Requires:       %{libname} = %{version}-%{release}
@@ -59,7 +58,7 @@ Provides:       tomcrypt-devel = %{version}-%{release}
 The %{libname_devel} package contains libraries and header files for
 developing applications that use %{name}.
 
-%package -n %{libname_static_devel}
+%package -n	%{libname_static_devel}
 Summary:        Static development files for %{name}
 Group:          Development/C
 Requires:       tomcrypt-devel = %{version}-%{release}
@@ -72,52 +71,39 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .makefile
+%patch0 -p1 -b .makefile~
 
 %build
 export CFLAGS="%{optflags} -DLTM_DESC -I%{_includedir}/tommath"
 %ifarch ppc64
 export CFLAGS="$CFLAGS -O0"
 %endif
-%{make} LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared 
-%{make} LIBPATH=%{_libdir} -f makefile docs
+%make LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared 
+%make LIBPATH=%{_libdir} -f makefile docs
 
 %check
 export CFLAGS="%{optflags} -DLTM_DESC -DUSE_LTM -I%{_includedir}/tommath"
-%{make} LIBPATH=%{_libdir} EXTRALIBS="-ltommath" test
+%make LIBPATH=%{_libdir} EXTRALIBS="-ltommath" test
 ./test
 
 %install
 # There is no configure script that ships with libtomcrypt but it does
 # have understand DESTDIR and its installs via that and the
 # INSTALL_USER and INSTALL_GROUP environment variables.
-rm -rf %{buildroot}
 export INSTALL_USER=$(id -un)
 export INSTALL_GROUP=$(id -gn)
 export CFLAGS="%{optflags} -DLTM_DESC -DUSE_LTM"
 
-%{makeinstall_std} INCPATH=%{_includedir}/tomcrypt LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared
-
-%clean
-rm -rf %{buildroot}
-
-%post -n %{libname} -p /sbin/ldconfig
-
-%postun -n %{libname} -p /sbin/ldconfig
+%makeinstall_std INCPATH=%{_includedir}/tomcrypt LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared
 
 %files -n %{libname}
-%defattr(0644,root,root,0755)
 %doc LICENSE
-%attr(-,root,root) %{_libdir}/*.so.*
+%{_libdir}/*.so.*
 
 %files -n %{libname_devel}
-%defattr(0644,root,root,0755)
 %doc doc/crypt.pdf
 %{_includedir}/tomcrypt
-%attr(-,root,root) %{_libdir}/*.la
-%attr(-,root,root) %{_libdir}/*.so
+%{_libdir}/*.so
 
 %files -n %{libname_static_devel}
-%defattr(0644,root,root,0755)
 %{_libdir}/*.a
-
