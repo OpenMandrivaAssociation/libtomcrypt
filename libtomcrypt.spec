@@ -80,7 +80,7 @@ export CFLAGS="$CFLAGS -O0"
 %endif
 
 # (tpg) don't hardcode gcc
-sed -i -e "s/gcc/%{__cc}/g" makefile.shared
+sed -i -e "s#gcc#%{__cc}#g" makefile.shared
 
 %make LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile docs
 %make LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared
