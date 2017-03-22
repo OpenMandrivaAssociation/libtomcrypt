@@ -1,18 +1,20 @@
+%define debug_package %{nil}
 %define major 0
 %define libname %mklibname tomcrypt %{major}
 %define develname %mklibname tomcrypt -d
-%define statiname %mklibname tomcrypt -d -s
+%define staticname %mklibname tomcrypt -d -s
 
 %define tommath_version 0.41
 
 Name:		libtomcrypt
 Version:	1.17
-Release:	5
+Release:	6
 Summary:	Comprehensive, portable cryptographic toolkit
 Group:		System/Libraries
 License:	Public Domain
 URL:		http://www.libtom.org/?page=features&newsitems=5&whatfile=crypt
 Source0:	http://www.libtom.org/files/crypt-%{version}.tar.bz2
+Patch0:		libtomcrypt-1.17-clang-4.0.patch
 BuildRequires:	ghostscript
 BuildRequires:	libtool
 BuildRequires:	tetex-dvips
@@ -55,7 +57,7 @@ Requires:	tommath-devel >= %{tommath_version}
 Provides:	tomcrypt-devel = %{EVRD}
 
 %description -n %{develname}
-The %{libname_devel} package contains libraries and header files for
+The %{develname} package contains libraries and header files for
 developing applications that use %{name}.
 
 %package -n %{staticname}
@@ -66,11 +68,13 @@ Requires:	tommath-static-devel >= %{tommath_version}
 Provides:	tomcrypt-static-devel = %{EVRD}
 
 %description -n %{staticname}
-The %{libname_static_devel} package contains static libraries for
+The %{staticname} package contains static libraries for
 developing applications that use %{name}.
 
 %prep
 %setup -q
+%apply_patches
+sed -i -e 's,libtool,libtool --tag=CC,g' makefile* */makefile*
 
 %build
 %setup_compile_flags
@@ -80,9 +84,10 @@ export CFLAGS="$CFLAGS -O0"
 %endif
 
 # (tpg) don't hardcode gcc
-sed -i -e "s#gcc#%{__cc}#g" makefile.shared
+sed -i -e "s#gcc#%{__cc}#g" makefile.shared makefile
 
 %make LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile docs
+%make LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile
 %make LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared
 
 # making the test fucks something up somewhere...
@@ -102,6 +107,7 @@ export INSTALL_GROUP=$(id -gn)
 export CFLAGS="%{optflags} -DLTM_DESC -DUSE_LTM"
 
 %makeinstall_std INCPATH=%{_includedir}/tomcrypt LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared
+cp -a libtomcrypt.a %{buildroot}%{_libdir}/
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
