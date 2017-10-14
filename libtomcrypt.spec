@@ -7,13 +7,13 @@
 %define tommath_version 0.41
 
 Name:		libtomcrypt
-Version:	1.17
-Release:	6
+Version:	1.18
+Release:	1
 Summary:	Comprehensive, portable cryptographic toolkit
 Group:		System/Libraries
 License:	Public Domain
 URL:		http://www.libtom.org/?page=features&newsitems=5&whatfile=crypt
-Source0:	http://www.libtom.org/files/crypt-%{version}.tar.bz2
+Source0:	http://www.libtom.org/files/crypt-%{version}.tar.xz
 Patch0:		libtomcrypt-1.17-clang-4.0.patch
 BuildRequires:	ghostscript
 BuildRequires:	libtool
