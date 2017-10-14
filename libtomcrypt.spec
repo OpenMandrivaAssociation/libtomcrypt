@@ -14,7 +14,6 @@ Group:		System/Libraries
 License:	Public Domain
 URL:		http://www.libtom.org/?page=features&newsitems=5&whatfile=crypt
 Source0:	http://www.libtom.org/files/crypt-%{version}.tar.xz
-Patch0:		libtomcrypt-1.17-clang-4.0.patch
 BuildRequires:	ghostscript
 BuildRequires:	libtool
 BuildRequires:	tetex-dvips
