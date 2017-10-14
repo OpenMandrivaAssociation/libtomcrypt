@@ -4,7 +4,7 @@
 %define develname %mklibname tomcrypt -d
 %define staticname %mklibname tomcrypt -d -s
 
-%define tommath_version 0.41
+%define tommath_version 1.0.1
 
 Name:		libtomcrypt
 Version:	1.18
