@@ -72,7 +72,7 @@ The %{staticname} package contains static libraries for
 developing applications that use %{name}.
 
 %prep
-%setup -q
+%setup -qn %{name}-%{version}0
 %apply_patches
 sed -i -e 's,libtool,libtool --tag=CC,g' makefile* */makefile*
 
