@@ -85,9 +85,14 @@ export CFLAGS="$CFLAGS -O0"
 # (tpg) don't hardcode gcc
 sed -i -e "s#gcc#%{__cc}#g" makefile.shared makefile
 
-%make LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile docs
-%make LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile
-%make LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared
+export PREFIX="%{_prefix}"
+export INCPATH="%{_includedir}"
+export LIBPATH="%{_libdir}"
+export EXTRALIBS="-ltommath"
+
+%make V=1 -f makefile.shared library
+%make V=1 -f makefile docs
+%make V=1 -f makefile.shared test
 
 # making the test fucks something up somewhere...
 %if 0
@@ -108,6 +113,13 @@ export CFLAGS="%{optflags} -DLTM_DESC -DUSE_LTM"
 %makeinstall_std INCPATH=%{_includedir}/tomcrypt LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared
 cp -a libtomcrypt.a %{buildroot}%{_libdir}/
 
+# Remove unneeded files
+find %{buildroot} -name '*.la' -delete
+find %{buildroot} -name '*.a' -delete
+
+# Fix pkgconfig path
+sed -i -e 's|^prefix=.*|prefix=%{_prefix}|g' -e 's|^libdir=.*|libdir=${prefix}/%{_lib}|g' %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
+    
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
 
@@ -116,6 +128,7 @@ cp -a libtomcrypt.a %{buildroot}%{_libdir}/
 %doc LICENSE
 %{_includedir}/tomcrypt
 %{_libdir}/*.so
+%{_libdir}/pkgconfig/*.pc
 
 %files -n %{staticname}
 %{_libdir}/*.a
