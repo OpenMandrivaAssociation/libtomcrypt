@@ -12,7 +12,7 @@ Release:	1
 Summary:	Comprehensive, portable cryptographic toolkit
 Group:		System/Libraries
 License:	Public Domain
-URL:		http://www.libtom.org/?page=features&newsitems=5&whatfile=crypt
+URL:		http://www.libtom.net/LibTomCrypt/
 Source0:	http://www.libtom.org/files/crypt-%{version}.tar.xz
 BuildRequires:	ghostscript
 BuildRequires:	libtool
