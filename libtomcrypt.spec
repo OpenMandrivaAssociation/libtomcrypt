@@ -14,7 +14,7 @@ Group:		System/Libraries
 License:	Public Domain
 URL:		http://www.libtom.net/LibTomCrypt/
 Source0:	http://www.libtom.org/files/crypt-%{version}.tar.xz
-Patch0:		libtomcrypt-1.17-clang-4.0.patch
+#Patch0:		libtomcrypt-1.17-clang-4.0.patch
 BuildRequires:	ghostscript
 BuildRequires:	libtool
 BuildRequires:	tetex-dvips
@@ -86,14 +86,16 @@ export CFLAGS="$CFLAGS -O0"
 # (tpg) don't hardcode gcc
 sed -i -e "s#gcc#%{__cc}#g" makefile.shared makefile
 
+export CC=%{__cc}
+export CXX=%{__cxx}
 export PREFIX="%{_prefix}"
 export INCPATH="%{_includedir}"
 export LIBPATH="%{_libdir}"
 export EXTRALIBS="-ltommath"
 
-%make V=1 -f makefile.shared library
-%make V=1 -f makefile docs
-%make V=1 -f makefile.shared test
+%make V=0 -f makefile.shared library
+%make V=0 -f makefile docs
+%make V=0 -f makefile.shared test
 
 # making the test fucks something up somewhere...
 %if 0
