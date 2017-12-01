@@ -86,8 +86,8 @@ export CFLAGS="$CFLAGS -O0"
 # (tpg) don't hardcode gcc
 sed -i -e "s#gcc#%{__cc}#g" makefile.shared makefile
 
-export CC=%{__cc}
-export CXX=%{__cxx}
+export CC=gcc
+export CXX=g++
 export PREFIX="%{_prefix}"
 export INCPATH="%{_includedir}"
 export LIBPATH="%{_libdir}"
