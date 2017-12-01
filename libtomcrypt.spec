@@ -3,6 +3,7 @@
 %define libname %mklibname tomcrypt %{major}
 %define develname %mklibname tomcrypt -d
 %define staticname %mklibname tomcrypt -d -s
+%define _disable_lto 1
 
 %define tommath_version 1.0.1
 
