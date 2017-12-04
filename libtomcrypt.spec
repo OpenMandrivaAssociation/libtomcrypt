@@ -2,7 +2,6 @@
 %define major 0
 %define libname %mklibname tomcrypt %{major}
 %define develname %mklibname tomcrypt -d
-%define staticname %mklibname tomcrypt -d -s
 %define _disable_lto 1
 
 %define tommath_version 1.0.1
@@ -56,20 +55,11 @@ Group:		Development/C
 Requires:	%{libname} = %{EVRD}
 Requires:	tommath-devel >= %{tommath_version}
 Provides:	tomcrypt-devel = %{EVRD}
+Obsoletes:	%{mklibname tomcrypt -d -s} < 1.18
+Provides:	%{mklibname tomcrypt -d -s} = 1.18
 
 %description -n %{develname}
 The %{develname} package contains libraries and header files for
-developing applications that use %{name}.
-
-%package -n %{staticname}
-Summary:	Static development files for %{name}
-Group:		Development/C
-Requires:	tomcrypt-devel = %{EVRD}
-Requires:	tommath-static-devel >= %{tommath_version}
-Provides:	tomcrypt-static-devel = %{EVRD}
-
-%description -n %{staticname}
-The %{staticname} package contains static libraries for
 developing applications that use %{name}.
 
 %prep
@@ -94,8 +84,6 @@ export INCPATH="%{_includedir}"
 export LIBPATH="%{_libdir}"
 export EXTRALIBS="-ltommath"
 
-# build static library
-%make V=0
 # build shared library
 %make V=0 -f makefile.shared library
 %make V=0 -f makefile docs
@@ -118,10 +106,10 @@ export INSTALL_GROUP=$(id -gn)
 export CFLAGS="%{optflags} -DLTM_DESC -DUSE_LTM"
 
 %makeinstall_std INCPATH=%{_includedir}/tomcrypt LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared
-cp -a libtomcrypt.a %{buildroot}%{_libdir}/
 
 # Remove unneeded files
 find %{buildroot} -name '*.la' -delete
+find %{buildroot} -name '*.a' -delete
 
 # Fix pkgconfig path
 sed -i -e 's|^prefix=.*|prefix=%{_prefix}|g' -e 's|^libdir=.*|libdir=${prefix}/%{_lib}|g' %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
@@ -135,6 +123,3 @@ sed -i -e 's|^prefix=.*|prefix=%{_prefix}|g' -e 's|^libdir=.*|libdir=${prefix}/%
 %{_includedir}/tomcrypt
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
-
-%files -n %{staticname}
-%{_libdir}/*.a
