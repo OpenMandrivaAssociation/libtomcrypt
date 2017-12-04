@@ -85,7 +85,7 @@ export CFLAGS="$CFLAGS -O0"
 %endif
 
 # (tpg) don't hardcode gcc
-sed -i -e "s#gcc#%{__cc}#g" makefile.shared makefile
+sed -i -e "s#gcc#%{__cc}#g" makefile*
 
 export CC=gcc
 export CXX=g++
@@ -94,6 +94,9 @@ export INCPATH="%{_includedir}"
 export LIBPATH="%{_libdir}"
 export EXTRALIBS="-ltommath"
 
+# build static library
+%make V=0
+# build shared library
 %make V=0 -f makefile.shared library
 %make V=0 -f makefile docs
 #make V=0 -f makefile.shared test
@@ -119,7 +122,6 @@ cp -a libtomcrypt.a %{buildroot}%{_libdir}/
 
 # Remove unneeded files
 find %{buildroot} -name '*.la' -delete
-find %{buildroot} -name '*.a' -delete
 
 # Fix pkgconfig path
 sed -i -e 's|^prefix=.*|prefix=%{_prefix}|g' -e 's|^libdir=.*|libdir=${prefix}/%{_lib}|g' %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
