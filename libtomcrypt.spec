@@ -96,7 +96,7 @@ export EXTRALIBS="-ltommath"
 
 %make V=0 -f makefile.shared library
 %make V=0 -f makefile docs
-%make V=0 -f makefile.shared test
+#make V=0 -f makefile.shared test
 
 # making the test fucks something up somewhere...
 %if 0
