@@ -75,7 +75,7 @@ export CFLAGS="$CFLAGS -O0"
 %endif
 
 # (tpg) don't hardcode gcc
-sed -i -e "s#gcc#%{__cc}#g" makefile*
+# sed -i -e "s#gcc#%{__cc}#g" makefile*
 
 export CC=gcc
 export CXX=g++
