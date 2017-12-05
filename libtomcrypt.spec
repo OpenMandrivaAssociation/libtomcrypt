@@ -1,5 +1,5 @@
 %define debug_package %{nil}
-%define major 0
+%define major 1
 %define libname %mklibname tomcrypt %{major}
 %define develname %mklibname tomcrypt -d
 %define _disable_lto 1
@@ -36,6 +36,7 @@ snippet examples.
 %package -n %{libname}
 Summary:	Comprehensive, portable cryptographic toolkit
 Group:		System/Libraries
+Obsoletes:		%{mklibname tomcrypt 0} < 1.18
 
 %description -n %{libname}
 A comprehensive, modular and portable cryptographic toolkit that
