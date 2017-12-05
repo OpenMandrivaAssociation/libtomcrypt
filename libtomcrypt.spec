@@ -8,7 +8,7 @@
 
 Name:		libtomcrypt
 Version:	1.18
-Release:	1
+Release:	2
 Summary:	Comprehensive, portable cryptographic toolkit
 Group:		System/Libraries
 License:	Public Domain
@@ -113,7 +113,7 @@ find %{buildroot} -name '*.la' -delete
 find %{buildroot} -name '*.a' -delete
 
 # Fix pkgconfig path
-sed -i -e 's|^prefix=.*|prefix=%{_prefix}|g' -e 's|^libdir=.*|libdir=${prefix}/%{_lib}|g' %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
+sed -i -e 's|^prefix=.*|prefix=%{_prefix}|g' -e 's|^libdir=.*|libdir=${prefix}/%{_lib}|g' -e 's|^includedir=.*|includedir=${prefix}/include/tomcrypt|g' %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
     
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
