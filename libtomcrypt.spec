@@ -65,7 +65,7 @@ The %{develname} package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -qn %{name}-%{version}.0
+%setup -q
 %apply_patches
 sed -i -e 's,libtool,libtool --tag=CC,g' makefile* */makefile*
 
