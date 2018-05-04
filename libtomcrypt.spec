@@ -3,12 +3,13 @@
 %define libname %mklibname tomcrypt %{major}
 %define develname %mklibname tomcrypt -d
 %define _disable_lto 1
+%global optflags %{optflags} -Ofast -falign-functions=32 -fno-math-errno -fno-trapping-math
 
 %define tommath_version 1.0.1
 
 Name:		libtomcrypt
-Version:	1.18
-Release:	2
+Version:	1.18.1
+Release:	1
 Summary:	Comprehensive, portable cryptographic toolkit
 Group:		System/Libraries
 License:	Public Domain
