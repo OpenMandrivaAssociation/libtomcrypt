@@ -88,7 +88,7 @@ export EXTRALIBS="-ltommath"
 
 # build shared library
 %make V=0 -f makefile.shared library
-%make V=0 -f makefile docs
+#make V=0 -f makefile docs
 #make V=0 -f makefile.shared test
 
 # making the test fucks something up somewhere...
@@ -120,7 +120,6 @@ sed -i -e 's|^prefix=.*|prefix=%{_prefix}|g' -e 's|^libdir=.*|libdir=${prefix}/%
 %{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
-%doc doc/crypt.pdf
 %doc LICENSE
 %{_includedir}/tomcrypt
 %{_libdir}/*.so
