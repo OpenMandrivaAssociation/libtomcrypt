@@ -66,7 +66,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 sed -i -e 's,libtool,libtool --tag=CC,g' makefile* */makefile*
 
 %build
