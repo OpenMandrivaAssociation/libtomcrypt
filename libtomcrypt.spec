@@ -17,8 +17,8 @@ URL:		http://www.libtom.net/LibTomCrypt/
 Source0:	https://github.com/libtom/libtomcrypt/archive/v%{version}.tar.gz
 BuildRequires:	ghostscript
 BuildRequires:	libtool
-BuildRequires:	tetex-dvips
-BuildRequires:	tetex-latex ghostscript-dvipdf
+#BuildRequires:	tetex-dvips
+#BuildRequires:	tetex-latex ghostscript-dvipdf
 BuildRequires:	tommath-devel >= %{tommath_version}
 
 %description
@@ -106,20 +106,20 @@ export INSTALL_USER=$(id -un)
 export INSTALL_GROUP=$(id -gn)
 export CFLAGS="%{optflags} -DLTM_DESC -DUSE_LTM"
 
-%makeinstall_std INCPATH=%{_includedir}/tomcrypt LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared
+%makeinstall_std INCPATH=%{_includedir} LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared
 
 # Remove unneeded files
 find %{buildroot} -name '*.la' -delete
 find %{buildroot} -name '*.a' -delete
 
 # Fix pkgconfig path
-sed -i -e 's|^prefix=.*|prefix=%{_prefix}|g' -e 's|^libdir=.*|libdir=${prefix}/%{_lib}|g' -e 's|^includedir=.*|includedir=${prefix}/include/tomcrypt|g' %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
+sed -i -e 's|^prefix=.*|prefix=%{_prefix}|g' -e 's|^libdir=.*|libdir=${prefix}/%{_lib}|g' -e 's|^includedir=.*|includedir=${prefix}/include/|g' %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
     
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
 %doc LICENSE
-%{_includedir}/tomcrypt
+%{_includedir}/tomcrypt*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
