@@ -9,7 +9,7 @@
 
 Name:		libtomcrypt
 Version:	1.18.2
-Release:	1
+Release:	2
 Summary:	Comprehensive, portable cryptographic toolkit
 Group:		System/Libraries
 License:	Public Domain
@@ -64,8 +64,7 @@ The %{develname} package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 sed -i -e 's,libtool,libtool --tag=CC,g' makefile* */makefile*
 
 %build
@@ -86,7 +85,7 @@ export LIBPATH="%{_libdir}"
 export EXTRALIBS="-ltommath"
 
 # build shared library
-%make V=0 -f makefile.shared library
+%make_build V=0 -f makefile.shared library
 #make V=0 -f makefile docs
 #make V=0 -f makefile.shared test
 
@@ -94,7 +93,7 @@ export EXTRALIBS="-ltommath"
 %if 0
 %check
 export CFLAGS="%{optflags} -DLTM_DESC -DUSE_LTM -I%{_includedir}/tommath"
-%make LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile test
+make LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile test
 ./test
 %endif
 
@@ -106,7 +105,7 @@ export INSTALL_USER=$(id -un)
 export INSTALL_GROUP=$(id -gn)
 export CFLAGS="%{optflags} -DLTM_DESC -DUSE_LTM"
 
-%makeinstall_std INCPATH=%{_includedir} LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared
+%make_install INCPATH=%{_includedir} LIBPATH=%{_libdir} EXTRALIBS="-ltommath" -f makefile.shared
 
 # Remove unneeded files
 find %{buildroot} -name '*.la' -delete
