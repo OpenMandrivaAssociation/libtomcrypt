@@ -9,7 +9,7 @@
 
 Name:		libtomcrypt
 Version:	1.18.2
-Release:	2
+Release:	3
 Summary:	Comprehensive, portable cryptographic toolkit
 Group:		System/Libraries
 License:	Public Domain
