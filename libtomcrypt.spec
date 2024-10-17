@@ -13,7 +13,7 @@ Release:	3
 Summary:	Comprehensive, portable cryptographic toolkit
 Group:		System/Libraries
 License:	Public Domain
-URL:		http://www.libtom.net/LibTomCrypt/
+URL:		https://www.libtom.net/LibTomCrypt/
 Source0:	https://github.com/libtom/libtomcrypt/archive/v%{version}.tar.gz
 BuildRequires:	ghostscript
 BuildRequires:	libtool
