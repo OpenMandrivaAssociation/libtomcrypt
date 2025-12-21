@@ -15,6 +15,7 @@ Group:		System/Libraries
 License:	Public Domain
 URL:		https://www.libtom.net/LibTomCrypt/
 Source0:	https://github.com/libtom/libtomcrypt/archive/v%{version}.tar.gz
+BuildRequires:	make
 BuildRequires:	ghostscript
 BuildRequires:	libtool
 #BuildRequires:	tetex-dvips
